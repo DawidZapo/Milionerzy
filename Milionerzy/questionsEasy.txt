@@ -1,18 +1,18 @@
-Ile kol ma samochod?
-5
-6
-4
-3
+Co chodzi i bije, a nie je, nie pije?
+Szafa
+But
+Zegar
+Miska
 C
 Ile mrozu ma monet?
 Miliony monet
-zero monet
-3 monety
-10 monet
+Zero monet
+Trzy monety
+Dziesiec monet
 A
-Jaka jest waga babi jaga
-345
-234
-7654
-676
-C
+Gdzie sie czlowiek sie spieszy:
+Tam sie diabel cieszy
+Tam latwiej o wypadek
+Tam mniej szczescia
+Tam Bog sie cieszy
+A
