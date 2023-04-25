@@ -1,6 +1,7 @@
 ﻿#include "Question.h"
-bool validateAnswer(string choice); // waliduje odpowiedz podana przez uzytkownia, uzytkownik wprowadza stringa
+bool validateAnswer(string choice); // waliduje odpowiedz podana przez uzytkownia pod katem co wpisal uzytkownik, uzytkownik wprowadza stringa
 // po czym rozwazany jest tylko pierwszy znak w ciagu. Jesli rowna sie a, b, c lub d, zwraca prawde
+bool validateCorrectAnswer(Question question, string choice); // walidacja odpowiedzi pod katem jej poprawnosci z odpowiedzia pytania
 int main()
 {
     vector<Question> questionsEasy; // przykladowa lista (taka ulepszona tablica) gdzie beda dodawane pytania, ta lista ma lepsze metody przez co latwiej dodac nowe pytania, taka ala dynamiczna tablica dla klasy/struktur
@@ -50,28 +51,22 @@ int main()
     }
     plik.close();
    
-    for (int i = 0; i < questionsEasy.size(); i++) { // wypisanie wszystkich pytan oraz odpowiedzi dla questionsEasy
+    for (int i = 0; i < questionsEasy.size(); i++) { // wypisanie wszystkich pytan oraz odpowiedzi dla questionsEasy przeczytanych w pliku .txt
         questionsEasy.at(i).displayQuestion();
         cout << questionsEasy.at(i).getCorrectAnswer() << endl << endl;
     }
-
+    // ponizej przykladowy mechanizm zadawania pytania
     string choice;
-    char choiceChar;
-
+    
+    questionsEasy.at(0).displayQuestion();
     do { // pobieranie odpowiedzi przez uzytkownika, docelowo mozna zamknac to w funkcji 
         cin >> choice;
-        cout << choice << endl;
 
-    } while (!validateAnswer(choice)); // walidacja odpowiedzi przez uzytkownika, walidacja nie znaczy sprawdzenie poprawnosci odpowiedzi na pytanie
+    } while (!validateAnswer(choice)); // walidacja odpowiedzi przez uzytkownika pod katem co uzytkownik wpisal w konsole
     
-    choiceChar = choice[0]; //przypisanie choiceChar pierwszej literki string choice
-   
-    if (toupper(choiceChar) == questionsEasy[0].getCorrectAnswer()) { //sprawdzenie czy choiceChar jest poprawna odpowiedzia
-        cout << "Poprawna" << endl;
-    }
-    else {
-        cout << "Niepoprawna" << endl;
-    }
+    //walidacja odpowidzi pod katem jej poprawnosci
+    if (validateCorrectAnswer(questionsEasy.at(0), choice)) cout << "Poprawna!" << endl;
+    else cout << "Niepoprawna" << endl;
 }
 
 bool validateAnswer(string choice) {
@@ -80,4 +75,13 @@ bool validateAnswer(string choice) {
         choice != "a" && choice != "b" && choice != "c" && choice != "d") return false;
     else return true;
 }
+bool validateCorrectAnswer(Question question, string choice) {
+    char choiceChar = choice[0];
 
+    if (toupper(choiceChar) == question.getCorrectAnswer()) { //sprawdzenie czy choiceChar jest poprawna odpowiedzia
+        return true;
+    }
+    else {
+        return false;
+    }
+}
