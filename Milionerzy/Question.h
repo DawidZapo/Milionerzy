@@ -17,6 +17,7 @@ private:
 	string answer3;
 	string answer4;
 	string questionContent;
+	bool alreadyAsked;
 
 public:
 	Question(){}
@@ -35,5 +36,7 @@ public:
 	void setAnswer4(string answer4);
 	void setQuestionContent(string questionContent);
 	void displayQuestion(); // wyswietla tresc pytania oraz odpowiedzi
+	bool isAlreadyAsked();
+	void setAsked(bool flag);
 };
 

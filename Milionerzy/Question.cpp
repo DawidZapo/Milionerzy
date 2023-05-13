@@ -7,6 +7,7 @@ Question::Question(string questionContent, string answer1, string answer2, strin
 	this->answer3 = answer3;
 	this->answer4 = answer4;
 	this->correctAnswer = correctAnswer;
+	this->alreadyAsked = false;
 }
 Question::~Question(){}
 char Question::getCorrectAnswer() {
@@ -49,4 +50,10 @@ void Question::displayQuestion() {
 	cout << questionContent << endl;
 	cout << "A: " << setw(20) <<  answer1 << setw(3) << " B: " << setw(20) << answer2 << endl
 		<< "C: " << setw(20) << answer3  << setw(3) << " D: " << setw(20) << answer4 << endl;
+}
+bool Question::isAlreadyAsked() {
+	return alreadyAsked;
+}
+void Question::setAsked(bool flag) {
+	this->alreadyAsked = flag;
 }
