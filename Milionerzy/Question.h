@@ -36,6 +36,8 @@ public:
 	void setAnswer4(string answer4);
 	void setQuestionContent(string questionContent);
 	void displayQuestion(); // wyswietla tresc pytania oraz odpowiedzi
+	void displayFiftyFiftyQuestion(); // wyswietla pytanie gdy kolo 50/50 jest wziete
+	void displayAskTheAudienceAnswers(); // wyswietla procenty jakie publicznosc mogla udzielic
 	bool isAlreadyAsked();
 	void setAsked(bool flag);
 };
