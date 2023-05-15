@@ -8,13 +8,15 @@ bool validateHelp(string choice);
 void loadEasyQuestionBase(vector<Question>& questionsEasy); // wczytywanie bazy pytan
 void loadMediumQuestionBase(vector<Question> &questionsMedium); //wczytywanie bazy pytan
 void loadHardQuestionBase(vector<Question>& questionsHard); // wczytywanie bazy pytan
-void askQuestion(vector<Question>& questionsList, int& points, bool &isGameOver, string name); //funkcja zadajaca pytanie
+void askQuestion(vector<Question>& questionsList, int& points, bool &isGameOver, string name,
+    bool& isAskTheAudienceTaken, bool& isFiftyFiftyTaken, bool& isAnotherQuestionTaken); //funkcja zadajaca pytanie
 string getPlayerName();
 string getRandomCorrectMessage(string name);
 void printHelloMessage();
-bool validateKindOfHelp(string help);;
+bool validateKindOfHelp(string help, bool& isFiftyFiftyTaken, bool& isAskTheAudienceTaken, bool& isAnotherQuestionTaken);
 void printRules(string name);
 string getRandomIncorrectMessage(string name);
+string getTheCurrentPrizeSum(int points);
 
 // z bazy pytan nalezy usunac polskie znaki, mimo moich wypocin nie potrafilem zrobic aby kod wczytywal polskie znaki z bazy
 // dodano 2/3 kola pomocnicze
@@ -58,19 +60,22 @@ int main()
     system("cls");
     
     // ponizej przykladowy mechanizm zadawania pytania
+    bool isAskTheAudienceTaken = false; // zmienna sluzace do zaznaczenia czy dana pomoc zostala juz udzielona podczas gry
+    bool isFiftyFiftyTaken = false; // zmienna sluzace do zaznaczenia czy dana pomoc zostala juz udzielona podczas gry
+    bool isAnotherQuestionTaken = false; // zmienna sluzace do zaznaczenia czy dana pomoc zostala juz udzielona podczas gry
     bool isGameOver = false;
     int points = 0;
     int random;
     while (!isGameOver) { // petla ktora zadaje pytania dopoki nie bedzie konca gry
 
         if (points < 2) {
-            askQuestion(questionsEasy, points, isGameOver, name); // zadawanie pytania z latwej puli
+            askQuestion(questionsEasy, points, isGameOver, name, isAskTheAudienceTaken, isFiftyFiftyTaken, isAnotherQuestionTaken); // zadawanie pytania z latwej puli
         }
         else if (points < 10) {
-            askQuestion(questionsMedium, points, isGameOver, name); // zadawanie pytania z sredniej puli
+            askQuestion(questionsMedium, points, isGameOver, name, isAskTheAudienceTaken, isFiftyFiftyTaken, isAnotherQuestionTaken); // zadawanie pytania z sredniej puli
         }
         else {
-            askQuestion(questionsHard, points, isGameOver, name); // zadawanie pytania z ciezkiej puli
+            askQuestion(questionsHard, points, isGameOver, name, isAskTheAudienceTaken, isFiftyFiftyTaken, isAnotherQuestionTaken); // zadawanie pytania z ciezkiej puli
         }
        
     }
@@ -236,7 +241,8 @@ bool validateHelp(string choice) {
     }
     else return false;
 }
-void askQuestion(vector<Question> &questionsList, int &points, bool &isGameOver, string name) { // funkcja zadawajaca pytania, walidujaca odpowiedz, all in one
+void askQuestion(vector<Question> &questionsList, int &points, bool &isGameOver, string name,
+    bool& isAskTheAudienceTaken, bool& isFiftyFiftyTaken, bool& isAnotherQuestionTaken) { // funkcja zadawajaca pytania, walidujaca odpowiedz, all in one
     srand(time(NULL));
     string choice;
     int random;
@@ -246,6 +252,253 @@ void askQuestion(vector<Question> &questionsList, int &points, bool &isGameOver,
 
     questionsList.at(random).displayQuestion();
 
+    if (!isFiftyFiftyTaken || !isAskTheAudienceTaken || !isAnotherQuestionTaken) {
+        cout << "\nJesli chcesz skorzystac z kol ratunkowych, wcisnij [T], jesli nie [N] " << endl;
+        cin >> choice;
+
+        if (validateHelp(choice)) {
+            string textHelp = (!isFiftyFiftyTaken) ? "[1] - 50/50\n" : "[1] - 50/50 [WYKORZYSTANE]\n";
+            cout << textHelp;
+            textHelp = (!isAskTheAudienceTaken) ? "[2] - Pytanie do publicznosci\n" : "[2] - Pytanie do publicznosc [WYKORZYSTANE]\n";
+            cout << textHelp;
+            textHelp = (!isAnotherQuestionTaken) ? "[3] - Ponowne losowanie pytania\n" : "[3] - Ponowne losowanie pytania [WYKORZYSTANE]\n";
+            cout << textHelp;
+            cout << "Wcisnij " << ((!isFiftyFiftyTaken) ? "[1] " : "[X] ") << ((!isAskTheAudienceTaken) ? "[2] " : "[X] ") <<
+                ((!isAnotherQuestionTaken) ? "[3] " : "[X] ") << endl;
+            
+            string help;
+            do {
+                cin >> help;
+            } while (validateKindOfHelp(help, isFiftyFiftyTaken, isAskTheAudienceTaken, isAnotherQuestionTaken));
+
+
+            if (help == "1") {
+                system("cls");
+                questionsList.at(random).displayFiftyFiftyQuestion();
+                cout << "\nPodaj swoja odpowiedz: " << endl;
+                do { // pobieranie odpowiedzi przez uzytkownika, docelowo mozna zamknac to w funkcji 
+                    cin >> choice;
+
+                } while (!validateAnswer(choice)); // walidacja odpowiedzi przez uzytkownika pod katem co uzytkownik wpisal w konsole
+
+                //walidacja odpowidzi pod katem jej poprawnosci
+                if (validateCorrectAnswer(questionsList.at(random), choice)) {
+                    cout << getRandomCorrectMessage(name) << endl;
+                    points++; // dodanie punktu 
+                    cout << getTheCurrentPrizeSum(points) << endl;
+
+                    if (points == 12) {
+                        isGameOver = true;
+                        cout << "Wygrales milion zlotych!" << endl;
+                    }
+                    cout << "Wcisnij jakikolwiek klawisz aby kontynuowac: []" << endl;
+                    string anyLetter;
+                    cin >> anyLetter;
+                    system("cls");
+                }
+                else {
+                    string prize;
+                    if (points >= 7) {
+                        prize = "40 000zl";
+                    }
+                    else if (points >= 2) {
+                        prize = "1 000zl";
+                    }
+                    else {
+                        prize = "0zl";
+                    }
+                    cout << getRandomIncorrectMessage(name) << endl;
+                    cout << "Wygrywasz: " << prize << endl;
+                    isGameOver = true; // wyjscie z gry poprzez niepoprawna odpowiedz
+                }
+                isFiftyFiftyTaken = true; // zaznacza, ze kolo ratunkowe zostalo uzyte
+                questionsList.at(random).setAsked(true); // zaznacza ze pytanie zostalo juz wylosowane    
+            }
+            else if(help == "2"){
+                system("cls");
+                questionsList.at(random).displayQuestion();
+                questionsList.at(random).displayAskTheAudienceAnswers();
+
+                cout << "\nPodaj swoja odpowiedz: [a] [b] [c] [d]" << endl;
+                do { // pobieranie odpowiedzi przez uzytkownika, docelowo mozna zamknac to w funkcji 
+                    cin >> choice;
+
+                } while (!validateAnswer(choice)); // walidacja odpowiedzi przez uzytkownika pod katem co uzytkownik wpisal w konsole
+
+                //walidacja odpowidzi pod katem jej poprawnosci
+                if (validateCorrectAnswer(questionsList.at(random), choice)) {
+                    cout << getRandomCorrectMessage(name) << endl;
+                    points++; // dodanie punktu 
+                    cout << getTheCurrentPrizeSum(points) << endl;
+                    if (points == 12) {
+                        cout << "Wygrales milion zlotych!" << endl;
+                        isGameOver = true;
+                    }
+                    cout << "Wcisnij jakikolwiek klawisz aby kontynuowac: []" << endl;
+                    string anyLetter;
+                    cin >> anyLetter;
+                    system("cls");
+                }
+                else {
+                    string prize;
+                    if (points >= 7) {
+                        prize = "40 000zl";
+                    }
+                    else if (points >= 2) {
+                        prize = "1 000zl";
+                    }
+                    else {
+                        prize = "0zl";
+                    }
+                    cout << getRandomIncorrectMessage(name) << endl;
+                    cout << "Wygrywasz: " << prize << endl;
+                    isGameOver = true; // wyjscie z gry poprzez niepoprawna odpowiedz
+                }
+                isAskTheAudienceTaken = true;
+                questionsList.at(random).setAsked(true); // zaznacza ze pytanie zostalo juz wylosowane 
+            }
+            else if (help == "3") {
+                system("cls");
+                questionsList.at(random).setAsked(true); // zaznacza ze pytanie zostalo juz wylosowane 
+                int anotherRandom = rand() % (questionsList.size());
+
+                questionsList.at(anotherRandom).displayQuestion();
+               
+                cout << "\nPodaj swoja odpowiedz: [a] [b] [c] [d]" << endl;
+                do { // pobieranie odpowiedzi przez uzytkownika, docelowo mozna zamknac to w funkcji 
+                    cin >> choice;
+
+                } while (!validateAnswer(choice)); // walidacja odpowiedzi przez uzytkownika pod katem co uzytkownik wpisal w konsole
+
+                //walidacja odpowidzi pod katem jej poprawnosci
+                if (validateCorrectAnswer(questionsList.at(anotherRandom), choice)) {
+                    cout << getRandomCorrectMessage(name) << endl;
+                    points++; // dodanie punktu 
+                    cout << getTheCurrentPrizeSum(points) << endl;
+                    if (points == 12) {
+                        cout << "Wygrales milion zlotych!" << endl;
+                        isGameOver = true;
+                    }
+                    cout << "Wcisnij jakikolwiek klawisz aby kontynuowac: []" << endl;
+                    string anyLetter;
+                    cin >> anyLetter;
+                    system("cls");
+                }
+                else {
+                    string prize;
+                    if (points >= 7) {
+                        prize = "40 000zl";
+                    }
+                    else if (points >= 2) {
+                        prize = "1 000zl";
+                    }
+                    else {
+                        prize = "0zl";
+                    }
+                    cout << getRandomIncorrectMessage(name) << endl;
+                    cout << "Wygrywasz: " << prize << endl;
+                    isGameOver = true; // wyjscie z gry poprzez niepoprawna odpowiedz
+                }
+                isAnotherQuestionTaken = true;
+                questionsList.at(anotherRandom).setAsked(true);
+            }
+            else {
+                cout << "Error" << endl;
+            }
+
+
+        }
+        else {
+        system("cls");
+        questionsList.at(random).displayQuestion();
+        cout << "\nPodaj swoja odpowiedz: [a] [b] [c] [d]" << endl;
+        do { // pobieranie odpowiedzi przez uzytkownika, docelowo mozna zamknac to w funkcji 
+            cin >> choice;
+
+        } while (!validateAnswer(choice)); // walidacja odpowiedzi przez uzytkownika pod katem co uzytkownik wpisal w konsole
+
+        //walidacja odpowidzi pod katem jej poprawnosci
+        if (validateCorrectAnswer(questionsList.at(random), choice)) {
+            cout << getRandomCorrectMessage(name) << endl;
+            points++; // dodanie punktu 
+            cout << getTheCurrentPrizeSum(points) << endl;
+            cout << "\n";
+            if (points == 12) {
+                cout << "Wygrales milion zlotych!" << endl;
+                isGameOver = true;
+            }
+            cout << "Wcisnij jakikolwiek klawisz aby kontynuowac: []" << endl;
+            string anyLetter;
+            cin >> anyLetter;
+            system("cls");
+        }
+        else {
+            string prize;
+            if (points >= 7) {
+                prize = "40 000zl";
+            }
+            else if (points >= 2) {
+                prize = "1 000zl";
+            }
+            else {
+                prize = "0zl";
+            }
+            cout << getRandomIncorrectMessage(name) << endl;
+            cout << "Wygrywasz: " << prize << endl;
+            isGameOver = true; // wyjscie z gry poprzez niepoprawna odpowiedz
+        }
+        questionsList.at(random).setAsked(true); // zaznacza ze pytanie zostalo juz wylosowane  
+}
+    }
+    else {
+    system("cls");
+    questionsList.at(random).displayQuestion();
+    cout << "\nPodaj swoja odpowiedz: [a] [b] [c] [d]" << endl;
+    do { // pobieranie odpowiedzi przez uzytkownika, docelowo mozna zamknac to w funkcji 
+        cin >> choice;
+
+    } while (!validateAnswer(choice)); // walidacja odpowiedzi przez uzytkownika pod katem co uzytkownik wpisal w konsole
+
+    //walidacja odpowidzi pod katem jej poprawnosci
+    if (validateCorrectAnswer(questionsList.at(random), choice)) {
+        cout << getRandomCorrectMessage(name) << endl;
+        points++; // dodanie punktu 
+        cout << getTheCurrentPrizeSum(points) << endl;
+        cout << "\n";
+        if (points == 12) {
+            cout << "Wygrales milion zlotych!" << endl;
+            isGameOver = true;
+        }
+        cout << "Wcisnij jakikolwiek klawisz aby kontynuowac: []" << endl;
+        string anyLetter;
+        cin >> anyLetter;
+        system("cls");
+    }
+    else {
+        string prize;
+        if (points >= 7) {
+            prize = "40 000zl";
+        }
+        else if (points >= 2) {
+            prize = "1 000zl";
+        }
+        else {
+            prize = "0zl";
+        }
+        cout << getRandomIncorrectMessage(name) << endl;
+        cout << "Wygrywasz: " << prize << endl;
+        isGameOver = true; // wyjscie z gry poprzez niepoprawna odpowiedz
+    }
+    questionsList.at(random).setAsked(true); // zaznacza ze pytanie zostalo juz wylosowane  
+    }
+    
+
+
+
+
+
+
+    /*
     cout << "\nJesli chcesz skorzystac z kol ratunkowych, wcisnij [T], jesli nie [N] " << endl;
     cin >> choice;
     
@@ -541,7 +794,7 @@ void askQuestion(vector<Question> &questionsList, int &points, bool &isGameOver,
         }
         questionsList.at(random).setAsked(true); // zaznacza ze pytanie zostalo juz wylosowane    
     }
-   
+    */
     
 
 }
@@ -561,7 +814,7 @@ string getRandomCorrectMessage(string name) {
     int number = rand() % 7;
     switch (number) {
     case 0:
-         return "Niestety jest to czas na przerwę, wracamy do was za parę minut!\n[...]\nWitam was tu Huber Urbanski Milionerzy, " + name + " jest to poprawna odpowiedz!";
+         return "Niestety jest to czas na przerwe, wracamy do was za pare minut!\n[...]\nWitam was tu Huber Urbanski Milionerzy, " + name + " jest to poprawna odpowiedz!";
          break;
     case 1:
         return "To jest prawidlowa odpowiedz!";
@@ -610,10 +863,66 @@ void printHelloMessage() {
     cout << "------- Dawid Zapotoczny & Krystian Rys ------" << endl;
     cout << "----------------------------------------------" << endl;
 }
-bool validateKindOfHelp(string help) {
+bool validateKindOfHelp(string help, bool& isFiftyFiftyTaken, bool& isAskTheAudienceTaken, bool& isAnotherQuestionTaken) {
     help = help.substr(0, 1);
     if (help == "1" || help == "2" || help == "3") {
-        return false;
+        if (help == "1" && !isFiftyFiftyTaken) {
+            return false;
+        }
+        else if (help == "2" && !isAskTheAudienceTaken) {
+            return false;
+        }
+        else if (help == "3" && !isAnotherQuestionTaken) {
+            return false;
+        }
+        else {
+            cout << "Te kolo ratunkowe zostalo juz uzyte" << endl;
+            return true;
+        }
     }
     else return true;
+}
+string getTheCurrentPrizeSum(int points) {
+    string text = "Obecnie posiadasz ";
+    switch (points) { //wypisanie sumy jaka na chwile obecna posiada uzytkownik
+    case 0:
+        return text + "0zl";
+        break;
+    case 1:
+        return text + "500zl";
+        break;
+    case 2:
+        return text + "1 000zl";
+        break;
+    case 3:
+        return text + "2 000zl";
+        break;
+    case 4:
+        return text + "5 000zl";
+        break;
+    case 5:
+        return text + "10 000zl";
+        break;
+    case 6:
+        return text + "20 000zl";
+        break;
+    case 7:
+        return text + "40 000zl";
+        break;
+    case 8:
+        return text + "75 000zl";
+        break;
+    case 9:
+        return text + "125 000zl";
+        break;
+    case 10:
+        return text + "250 000zl";
+        break;
+    case 11:
+        return text + "500 000zl";
+        break;
+    case 12:
+        return text + "1000 000zl";
+        break;
+    }
 }

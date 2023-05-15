@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="Milionerzy.cpp" />
     <ClCompile Include="Question.cpp" />
+    <ClCompile Include="Źródło.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Question.h" />
