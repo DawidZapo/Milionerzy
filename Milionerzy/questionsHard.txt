@@ -1,4 +1,4 @@
-Kiedy rozpoczęło się drugie tysiąclecie? 
+Kiedy rozpoczelo się drugie tysiaclecie? 
 1 stycznia 1000 roku
 1 stycznia 1001 roku 
 1 stycznia 2000 roku
@@ -10,7 +10,7 @@ kocioł
 okaryne
 czynele
 B
-Ile to jest 1111 razy 1111, jeśli 1 razy 1 to 1, a 11 razy 11 to 121?
+Ile to jest 1111 razy 1111, jesli 1 razy 1 to 1, a 11 razy 11 to 121?
 12 321
 1 234 321
 111 111 111
@@ -28,7 +28,7 @@ Batman
 Spider-Man
 Captain America
 B
-Skąd pochodzil Conan Barbarzynca?
+Skad pochodzil Conan Barbarzynca?
 z Rivii
 z Oz
 z Mordoru
@@ -46,7 +46,7 @@ Humphrey Bogart
 Charlie Chaplin
 Fred Astaire
 A
-Który utwor Juliusza Słowackiego napisany jest proza?
+Ktory utwor Juliusza Slowackiego napisany jest proza?
 "Godzina mysli"
 "W Szwajcarii"
 "Anhelli"
