@@ -1,5 +1,4 @@
 ﻿#include "Question.h"
-#include <stdlib.h>
 #include <iostream>
 bool validateChoice(string choice); // waliduje odpowiedz podana przez uzytkownia pod katem co wpisal uzytkownik, uzytkownik wprowadza stringa
 // po czym rozwazany jest tylko pierwszy znak w ciagu. Jesli rowna sie a, b, c lub d, zwraca prawde
@@ -9,6 +8,8 @@ bool validateHelp(string choice);
 void loadEasyQuestionBase(vector<Question>& questionsEasy); // wczytywanie bazy pytan
 void loadMediumQuestionBase(vector<Question> &questionsMedium); //wczytywanie bazy pytan
 void loadHardQuestionBase(vector<Question>& questionsHard); // wczytywanie bazy pytan
+void writeYourOwnYestions(); //walidacja odpowiedzi jakie pytanie chce zadan uczestnik
+void writeQuestionToFile(string choice); //wpisuje pytanie do odpowiedniego pliku z pytaniami na bazie jego decyzji
 void askQuestion(vector<Question>& questionsList, int& points, bool &isGameOver, string name,
     bool& isAskTheAudienceTaken, bool& isFiftyFiftyTaken, bool& isAnotherQuestionTaken); //funkcja zadajaca pytanie
 string getPlayerName();
@@ -30,6 +31,19 @@ int main()
     vector<Question> questionsHard; // tu pytania ciezkie
     Question tempQuestion = Question(); // zmienna tymczasowo sluzaca jako referencja do zapisu pytania do listy
 
+    printHelloMessage();
+    string name = getPlayerName();
+    string choice;
+
+    cout << "Czy chcesz dodac swoje autorskie pytania?\nWprowadz: [T] lub [N]\n";
+    do {
+        getline(cin, choice);
+        choice = choice.substr(0, 1);
+    } while (choice != "T" && choice != "t" && choice != "n" && choice != "N");
+
+    if (choice == "t" || choice == "T") writeYourOwnYestions();
+
+
     loadEasyQuestionBase(questionsEasy); //wczytywanie baz pytan
     loadMediumQuestionBase(questionsMedium);
     loadHardQuestionBase(questionsHard);
@@ -50,12 +64,11 @@ int main()
         cout << questionsHard.at(i).getCorrectAnswer() << endl << endl;
     }
     */
-    printHelloMessage();
-    string name = getPlayerName();
+    
     system("cls");
     printRules(name);
     string anyLetter;
-    cout << "Wcisnij jakikolwiek klawisz aby zaczac []!" << endl;
+    cout << "Wcisnij jakikolwiek klawisz i zatwierdz enterem aby zaczac []!" << endl;
     cin >> anyLetter;
     system("cls");
     
@@ -286,7 +299,7 @@ void askQuestion(vector<Question> &questionsList, int &points, bool &isGameOver,
                 isGameOver = true;
                 cout << "Wygrales milion zlotych!" << endl;
             }
-            cout << "Wcisnij jakikolwiek klawisz aby kontynuowac: []" << endl;
+            cout << "Wcisnij jakikolwiek klawisz i zatwierdz enterem aby kontynuowac: []" << endl;
             string anyLetter;
             cin >> anyLetter;
             system("cls");
@@ -835,4 +848,93 @@ bool validateChoice(string choice, bool& isFiftyFiftyTaken, bool& isAskTheAudien
             ((!isAnotherQuestionTaken) ? "[3] - Ponowne losowanie pytania " : "[X] - Ponowne losowanie pytania [WYKORZYSTANE] ") << endl;
         return true;
     }
+}
+void writeYourOwnYestions() {
+    
+    system("cls");
+    string choice;
+    string anotherChoice;
+    
+    do {
+        system("cls");
+        cout << "Jak bardzo trudne pytanie chcesz dopisac?\nWcisnij:\n[1] - Latwe\n[2] - Srednie\n[3] - Trudne\n";
+        do {
+            getline(cin, choice);
+            choice = choice.substr(0, 1);
+        } while (choice != "1" && choice != "2" && choice != "3");
+        writeQuestionToFile(choice);
+
+        cout << "Czy chcesz dodac kolejne pytanie? [T] [N]\n";
+        getline(cin, anotherChoice);
+        anotherChoice = anotherChoice.substr(0, 1);
+    } while (anotherChoice == "T" || anotherChoice == "t");
+}
+void writeQuestionToFile(string choice) {
+    string fileName;
+    if (choice == "3") fileName = "questionsHard.txt";
+    else if (choice == "2") fileName = "questionsMedium.txt";
+    else fileName = "questionsEasy.txt";
+
+    fstream file;
+    file.open(fileName, ios::in);
+    string line;
+    bool insertEnter = false;
+
+    // ponizej mechanizm sprawdza czy trzeba dodac znak nowej linii w celu poprawnego zapisu pliku .txt
+    if (file.good() == false) {
+        cout << "ERROR";
+    }
+    else {
+        while (getline(file, line)) {
+
+        }
+        cout << line << endl;
+        if (line[0] == 'A' || line[0] == 'B' || line[0] == 'C' || line[0] == 'D') insertEnter = true;
+        else insertEnter = false;
+    }
+
+    file.close();
+
+    //ponizej funkcja wypisujaca pytanie do odpowiedniego pliku .txt
+    file.open(fileName, ios::app);
+    string content;
+    string answer;
+    string correctAnswer;
+    
+    if (file.good() == false) {
+        cout << "ERROR" << endl;
+    }
+    else {
+        if (insertEnter) file << "\n";
+        cout << "Wprowadz tresc pytania: \n";
+        getline(cin, content);
+        file << content << endl;
+
+        cout << "Wprowadz mozliwa odpowiedz [1/4 - A]: \n";
+        getline(cin, answer);
+        file << answer << endl;
+
+        cout << "Wprowadz mozliwa odpowiedz [2/4 - B]: \n";
+        getline(cin, answer);
+        file << answer << endl;
+
+        cout << "Wprowadz mozliwa odpowiedz [3/4 - C]: \n";
+        getline(cin, answer);
+        file << answer << endl;
+
+        cout << "Wprowadz mozliwa odpowiedz [4/4 - D]: \n";
+        getline(cin, answer);
+        file << answer << endl;
+
+        cout << "Wprowadz poprawna odpowiedz [A] [B] [C] [D]: \n";
+        getline(cin, correctAnswer);
+        correctAnswer = correctAnswer.substr(0, 1);
+        correctAnswer = toupper(correctAnswer[0]);
+
+        file << correctAnswer << endl;
+
+        cout << "Pytanie zostalo poprawnie dodane!\n";
+    }
+
+    file.close();
 }

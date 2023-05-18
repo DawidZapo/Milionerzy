@@ -1,4 +1,4 @@
-Kiedy rozpoczelo się drugie tysiaclecie? 
+Kiedy rozpoczelo sie drugie tysiaclecie? 
 1 stycznia 1000 roku
 1 stycznia 1001 roku 
 1 stycznia 2000 roku
@@ -52,4 +52,3 @@ Ktory utwor Juliusza Slowackiego napisany jest proza?
 "Anhelli"
 "Arab"
 C
-
