@@ -2,7 +2,7 @@
 #include <iostream>
 bool validateChoice(string choice); // waliduje odpowiedz podana przez uzytkownia pod katem co wpisal uzytkownik, uzytkownik wprowadza stringa
 // po czym rozwazany jest tylko pierwszy znak w ciagu. Jesli rowna sie a, b, c lub d, zwraca prawde
-bool validateChoice(string choice, bool& isFiftyFiftyTaken, bool& isAskTheAudienceTaken, bool& isAnotherQuestionTaken);
+bool validateChoice(string choice, bool& isFiftyFiftyTaken, bool& isAskTheAudienceTaken, bool& isAnotherQuestionTaken, bool& isPhoneToFriendTaken);
 bool validateCorrectAnswer(Question question, string choice); // walidacja odpowiedzi pod katem jej poprawnosci z odpowiedzia pytania
 bool validateHelp(string choice);
 void loadEasyQuestionBase(vector<Question>& questionsEasy); // wczytywanie bazy pytan
@@ -11,11 +11,11 @@ void loadHardQuestionBase(vector<Question>& questionsHard); // wczytywanie bazy 
 void writeYourOwnYestions(); //walidacja odpowiedzi jakie pytanie chce zadan uczestnik
 void writeQuestionToFile(string choice); //wpisuje pytanie do odpowiedniego pliku z pytaniami na bazie jego decyzji
 void askQuestion(vector<Question>& questionsList, int& points, bool &isGameOver, string name,
-    bool& isAskTheAudienceTaken, bool& isFiftyFiftyTaken, bool& isAnotherQuestionTaken); //funkcja zadajaca pytanie
+    bool& isAskTheAudienceTaken, bool& isFiftyFiftyTaken, bool& isAnotherQuestionTaken,bool& isPhoneToFriendTaken); //funkcja zadajaca pytanie
 string getPlayerName();
 string getRandomCorrectMessage(string name);
 void printHelloMessage();
-bool validateKindOfHelp(string help, bool& isFiftyFiftyTaken, bool& isAskTheAudienceTaken, bool& isAnotherQuestionTaken);
+bool validateKindOfHelp(string help, bool& isFiftyFiftyTaken, bool& isAskTheAudienceTaken, bool& isAnotherQuestionTaken,bool &isPhoneToFriendTaken);
 void printRules(string name);
 string getRandomIncorrectMessage(string name);
 string getTheCurrentPrizeSum(int points);
@@ -76,18 +76,19 @@ int main()
     bool isAskTheAudienceTaken = false; // zmienna sluzace do zaznaczenia czy dana pomoc zostala juz udzielona podczas gry
     bool isFiftyFiftyTaken = false; // zmienna sluzace do zaznaczenia czy dana pomoc zostala juz udzielona podczas gry
     bool isAnotherQuestionTaken = false; // zmienna sluzace do zaznaczenia czy dana pomoc zostala juz udzielona podczas gry
+    bool isPhoneToFriendTaken = false; // zmienna sluzaca do zaznaczania czy dana pomoc zostala juz udzielona podczas gry
     bool isGameOver = false;
     int points = 0;
     while (!isGameOver) { // petla ktora zadaje pytania dopoki nie bedzie konca gry
 
         if (points < 2) {
-            askQuestion(questionsEasy, points, isGameOver, name, isAskTheAudienceTaken, isFiftyFiftyTaken, isAnotherQuestionTaken); // zadawanie pytania z latwej puli
+            askQuestion(questionsEasy, points, isGameOver, name, isAskTheAudienceTaken, isFiftyFiftyTaken, isAnotherQuestionTaken,isPhoneToFriendTaken); // zadawanie pytania z latwej puli
         }
         else if (points < 10) {
-            askQuestion(questionsMedium, points, isGameOver, name, isAskTheAudienceTaken, isFiftyFiftyTaken, isAnotherQuestionTaken); // zadawanie pytania z sredniej puli
+            askQuestion(questionsMedium, points, isGameOver, name, isAskTheAudienceTaken, isFiftyFiftyTaken, isAnotherQuestionTaken,isPhoneToFriendTaken); // zadawanie pytania z sredniej puli
         }
         else {
-            askQuestion(questionsHard, points, isGameOver, name, isAskTheAudienceTaken, isFiftyFiftyTaken, isAnotherQuestionTaken); // zadawanie pytania z ciezkiej puli
+            askQuestion(questionsHard, points, isGameOver, name, isAskTheAudienceTaken, isFiftyFiftyTaken, isAnotherQuestionTaken,isPhoneToFriendTaken); // zadawanie pytania z ciezkiej puli
         }
        
     }
@@ -254,7 +255,7 @@ bool validateHelp(string choice) {
     else return false;
 }
 void askQuestion(vector<Question> &questionsList, int &points, bool &isGameOver, string name,
-    bool& isAskTheAudienceTaken, bool& isFiftyFiftyTaken, bool& isAnotherQuestionTaken) { // funkcja zadawajaca pytania, walidujaca odpowiedz, all in one
+    bool& isAskTheAudienceTaken, bool& isFiftyFiftyTaken, bool& isAnotherQuestionTaken,bool& isPhoneToFriendTaken) { // funkcja zadawajaca pytania, walidujaca odpowiedz, all in one
     srand(time(NULL));
     string choice;
     int random;
@@ -266,17 +267,18 @@ void askQuestion(vector<Question> &questionsList, int &points, bool &isGameOver,
 
     cout << "Wcisnij: [a] [b] [c] [d]" << endl;
     
-    if (!isFiftyFiftyTaken || !isAskTheAudienceTaken || !isAnotherQuestionTaken) {
+    if (!isFiftyFiftyTaken || !isAskTheAudienceTaken || !isAnotherQuestionTaken || !isPhoneToFriendTaken) {
         cout << "Albo:" << endl;
         cout << ((!isFiftyFiftyTaken) ? "[1] - 50/50 " : "[X] - 50/50 [WYKORZYSTANE] ") << endl <<
             ((!isAskTheAudienceTaken) ? "[2] - Pytanie do publicznosci " : "[X] - Pytanie do publicznosci [WYKORZYSTANE] ") << endl <<
-            ((!isAnotherQuestionTaken) ? "[3] - Ponowne losowanie pytania " : "[X] - Ponowne losowanie pytania [WYKORZYSTANE] ") << endl;
+            ((!isAnotherQuestionTaken) ? "[3] - Ponowne losowanie pytania " : "[X] - Ponowne losowanie pytania [WYKORZYSTANE] ") << endl <<
+            ((!isPhoneToFriendTaken) ? "[4] - Telefon do przyjaciela " : "[X] - Telefon do przyjaciela[WYKORZYSTANE]") << endl;
     }
     
     
     do {
         cin >> choice;
-    } while (validateChoice(choice, isFiftyFiftyTaken, isAskTheAudienceTaken, isAnotherQuestionTaken));
+    } while (validateChoice(choice, isFiftyFiftyTaken, isAskTheAudienceTaken, isAnotherQuestionTaken,isPhoneToFriendTaken));
     
     choice = choice.substr(0, 1);
     
@@ -409,6 +411,49 @@ void askQuestion(vector<Question> &questionsList, int &points, bool &isGameOver,
         }
         isAnotherQuestionTaken = true;
         questionsList.at(anotherRandom).setAsked(true);
+    }
+    else if (choice == "4") {
+        system("cls");
+        questionsList.at(random).displayQuestion();
+        questionsList.at(random).displayPhoneToFriend();
+        cout << "\nPodaj swoja odpowiedz: " << endl;
+        do { // pobieranie odpowiedzi przez uzytkownika, docelowo mozna zamknac to w funkcji 
+            cin >> choice;
+
+        } while (!validateChoice(choice)); // walidacja odpowiedzi przez uzytkownika pod katem co uzytkownik wpisal w konsole
+        //walidacja odpowidzi pod katem jej poprawnosci
+        if (validateCorrectAnswer(questionsList.at(random), choice)) {
+            cout << getRandomCorrectMessage(name) << endl;
+            points++; // dodanie punktu 
+            cout << getTheCurrentPrizeSum(points) << endl;
+
+            if (points == 12) {
+            isGameOver = true;
+            cout << "Wygrales milion zlotych!" << endl;
+            }
+        cout << "Wcisnij jakikolwiek klawisz i zatwierdz enterem aby kontynuowac: []" << endl;
+        string anyLetter;
+        cin >> anyLetter;
+        system("cls");
+        }
+        else {
+            string prize;
+            if (points >= 7) {
+                prize = "40 000zl";
+            }
+            else if (points >= 2) {
+                prize = "1 000zl";
+            }
+            else {
+                prize = "0zl";
+            }
+            cout << getRandomIncorrectMessage(name) << endl;
+            cout << "Wygrywasz: " << prize << endl;
+            isGameOver = true; // wyjscie z gry poprzez niepoprawna odpowiedz
+        }
+        isPhoneToFriendTaken = true;
+        questionsList.at(random).setAsked(true);
+
     }
     else {
     if (validateCorrectAnswer(questionsList.at(random), choice)) {
@@ -696,7 +741,7 @@ string getPlayerName() {
 }
 void printRules(string name) {
     cout << "Witaj " << name << " w grze milionerzy!" << endl << endl;
-    cout << "Podczas gry bedziesz mial do dyspozycji 3 kola ratunkowe:\n\n1)50/50\n2)Pytanie do publicznosci\n3)Ponowne losowanie pytania\n\n";
+    cout << "Podczas gry bedziesz mial do dyspozycji 4 kola ratunkowe:\n\n1)50/50\n2)Pytanie do publicznosci\n3)Ponowne losowanie pytania\n4)Telefon do przyjaciela\n\n";
   
 }
 string getRandomCorrectMessage(string name) {
@@ -753,9 +798,9 @@ void printHelloMessage() {
     cout << "------- Dawid Zapotoczny & Krystian Rys ------" << endl;
     cout << "----------------------------------------------" << endl;
 }
-bool validateKindOfHelp(string help, bool& isFiftyFiftyTaken, bool& isAskTheAudienceTaken, bool& isAnotherQuestionTaken) {
+bool validateKindOfHelp(string help, bool& isFiftyFiftyTaken, bool& isAskTheAudienceTaken, bool& isAnotherQuestionTaken,bool& isPhoneToFriendTaken) {
     help = help.substr(0, 1);
-    if (help == "1" || help == "2" || help == "3") {
+    if (help == "1" || help == "2" || help == "3" || help == "4" ){
         if (help == "1" && !isFiftyFiftyTaken) {
             return false;
         }
@@ -763,6 +808,10 @@ bool validateKindOfHelp(string help, bool& isFiftyFiftyTaken, bool& isAskTheAudi
             return false;
         }
         else if (help == "3" && !isAnotherQuestionTaken) {
+            return false;
+        }
+        else if (help == "4" && !isPhoneToFriendTaken)
+        {
             return false;
         }
         else {
@@ -819,10 +868,10 @@ string getTheCurrentPrizeSum(int points) {
         break;
     }
 }
-bool validateChoice(string choice, bool& isFiftyFiftyTaken, bool& isAskTheAudienceTaken, bool& isAnotherQuestionTaken) {
+bool validateChoice(string choice, bool& isFiftyFiftyTaken, bool& isAskTheAudienceTaken, bool& isAnotherQuestionTaken, bool& isPhoneToFriendTaken) {
     choice = choice.substr(0, 1);
     
-    if (choice == "1" || choice == "2" || choice == "3") {
+    if (choice == "1" || choice == "2" || choice == "3" || choice == "4") {
         if (choice == "1" && !isFiftyFiftyTaken) {
             return false;
         }
@@ -830,6 +879,10 @@ bool validateChoice(string choice, bool& isFiftyFiftyTaken, bool& isAskTheAudien
             return false;
         }
         else if (choice == "3" && !isAnotherQuestionTaken) {
+            return false;
+        }
+        else if (choice == "4" && !isPhoneToFriendTaken)
+        {
             return false;
         }
         else {
@@ -845,7 +898,8 @@ bool validateChoice(string choice, bool& isFiftyFiftyTaken, bool& isAskTheAudien
         cout << "Albo:" << endl;
         cout << ((!isFiftyFiftyTaken) ? "[1] - 50/50 " : "[X] - 50/50 [WYKORZYSTANE] ") << endl <<
             ((!isAskTheAudienceTaken) ? "[2] - Pytanie do publicznosci " : "[X] - Pytanie do publicznosci [WYKORZYSTANE] ") << endl <<
-            ((!isAnotherQuestionTaken) ? "[3] - Ponowne losowanie pytania " : "[X] - Ponowne losowanie pytania [WYKORZYSTANE] ") << endl;
+            ((!isAnotherQuestionTaken) ? "[3] - Ponowne losowanie pytania " : "[X] - Ponowne losowanie pytania [WYKORZYSTANE] ") << endl <<
+            ((!isPhoneToFriendTaken) ? "[4] - Telefon do przyjaciela " : "[X] - Telefon do przyjaciela [WYKORZYSTANE]") << endl;
         return true;
     }
 }

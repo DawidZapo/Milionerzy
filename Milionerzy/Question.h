@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include <vector>
 #include <stdlib.h>
-
+#include <Windows.h>
 using namespace std;
 
 class Question
@@ -39,6 +39,7 @@ public:
 	void displayQuestion(); // wyswietla tresc pytania oraz odpowiedzi
 	void displayFiftyFiftyQuestion(); // wyswietla pytanie gdy kolo 50/50 jest wziete
 	void displayAskTheAudienceAnswers(); // wyswietla procenty jakie publicznosc mogla udzielic
+	void displayPhoneToFriend();
 	bool isAlreadyAsked();
 	void setAsked(bool flag);
 };

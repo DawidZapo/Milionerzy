@@ -185,7 +185,31 @@ void Question::displayAskTheAudienceAnswers() {
 	}
 
 }
+void Question::displayPhoneToFriend()
+{
+	cout << "Dzwonienie to przyjaciela w toku... " << endl;
+	Sleep(3000);
+	if (correctAnswer == 'A' || correctAnswer == 'a')
+	{
+		cout << "Mysle ze poprawna odpowiedzia jest A" << endl;
+	}
+	else if (correctAnswer == 'B' || correctAnswer == 'b')
+	{
+		cout << "Mysle ze poprawna odpowiedzia jest B" << endl;
+	}
+	else if (correctAnswer == 'C' || correctAnswer == 'c')
+	{
+		cout << "Mysle ze poprawna odpowiedzia jest C" << endl;
+	}
+	else if (correctAnswer == 'D' || correctAnswer == 'd')
+	{
+		cout << "Mysle ze poprawna odpowiedzia jest D" << endl;
+	}
+	else {
+		cout << "ERROR" << endl;
+	}
 
+}
 bool Question::isAlreadyAsked() {
 	return alreadyAsked;
 }
