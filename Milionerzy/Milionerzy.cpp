@@ -26,15 +26,15 @@ string getTheCurrentPrizeSum(int points);
 
 int main()
 {
+    bool play = true;
     vector<Question> questionsEasy; // przykladowa lista (taka ulepszona tablica) gdzie beda dodawane pytania, ta lista ma lepsze metody przez co latwiej dodac nowe pytania, taka ala dynamiczna tablica dla klasy/struktur
     vector<Question> questionsMedium; // tu pytania srednie
     vector<Question> questionsHard; // tu pytania ciezkie
     Question tempQuestion = Question(); // zmienna tymczasowo sluzaca jako referencja do zapisu pytania do listy
-
     printHelloMessage();
     string name = getPlayerName();
     string choice;
-
+    system("cls");
     cout << "Czy chcesz dodac swoje autorskie pytania?\nWprowadz: [T] lub [N]\n";
     do {
         getline(cin, choice);
@@ -42,59 +42,89 @@ int main()
     } while (choice != "T" && choice != "t" && choice != "n" && choice != "N");
 
     if (choice == "t" || choice == "T") writeYourOwnYestions();
+    while (play)
+    {
+        loadEasyQuestionBase(questionsEasy); //wczytywanie baz pytan
+        loadMediumQuestionBase(questionsMedium);
+        loadHardQuestionBase(questionsHard);
+        /*
+         cout << "EASY QUESTIONS" << endl;
+         for (int i = 0; i < questionsEasy.size(); i++) { // wypisanie wszystkich pytan oraz odpowiedzi dla questionsEasy przeczytanych w pliku .txt
+             questionsEasy.at(i).displayQuestion();      // zastosowanie tylko chwilowe by zobaczyc czy baza pytan sie wczytala
+             cout << questionsEasy.at(i).getCorrectAnswer() << endl << endl;
+         }
+         cout << "MEDIUM QUESTIONS" << endl;
+         for (int i = 0; i < questionsMedium.size(); i++) { // wypisanie wszystkich pytan oraz odpowiedzi dla questionsEasy przeczytanych w pliku .txt
+             questionsMedium.at(i).displayQuestion();      // zastosowanie tylko chwilowe by zobaczyc czy baza pytan sie wczytala
+             cout << questionsMedium.at(i).getCorrectAnswer() << endl << endl;
+         }
+         cout << "HARD QUESTIONS" << endl;
+         for (int i = 0; i < questionsHard.size(); i++) { // wypisanie wszystkich pytan oraz odpowiedzi dla questionsEasy przeczytanych w pliku .txt
+             questionsHard.at(i).displayQuestion();      // zastosowanie tylko chwilowe by zobaczyc czy baza pytan sie wczytala
+             cout << questionsHard.at(i).getCorrectAnswer() << endl << endl;
+         }
+         */
 
+        system("cls");
+        printRules(name);
+        string anyLetter;
+        cout << "Wcisnij jakikolwiek klawisz i zatwierdz enterem aby zaczac []!" << endl;
+        cin >> anyLetter;
+        system("cls");
 
-    loadEasyQuestionBase(questionsEasy); //wczytywanie baz pytan
-    loadMediumQuestionBase(questionsMedium);
-    loadHardQuestionBase(questionsHard);
-   /*
-    cout << "EASY QUESTIONS" << endl;
-    for (int i = 0; i < questionsEasy.size(); i++) { // wypisanie wszystkich pytan oraz odpowiedzi dla questionsEasy przeczytanych w pliku .txt
-        questionsEasy.at(i).displayQuestion();      // zastosowanie tylko chwilowe by zobaczyc czy baza pytan sie wczytala
-        cout << questionsEasy.at(i).getCorrectAnswer() << endl << endl;
-    }
-    cout << "MEDIUM QUESTIONS" << endl;
-    for (int i = 0; i < questionsMedium.size(); i++) { // wypisanie wszystkich pytan oraz odpowiedzi dla questionsEasy przeczytanych w pliku .txt
-        questionsMedium.at(i).displayQuestion();      // zastosowanie tylko chwilowe by zobaczyc czy baza pytan sie wczytala
-        cout << questionsMedium.at(i).getCorrectAnswer() << endl << endl;
-    }
-    cout << "HARD QUESTIONS" << endl;
-    for (int i = 0; i < questionsHard.size(); i++) { // wypisanie wszystkich pytan oraz odpowiedzi dla questionsEasy przeczytanych w pliku .txt
-        questionsHard.at(i).displayQuestion();      // zastosowanie tylko chwilowe by zobaczyc czy baza pytan sie wczytala
-        cout << questionsHard.at(i).getCorrectAnswer() << endl << endl;
-    }
-    */
-    
-    system("cls");
-    printRules(name);
-    string anyLetter;
-    cout << "Wcisnij jakikolwiek klawisz i zatwierdz enterem aby zaczac []!" << endl;
-    cin >> anyLetter;
-    system("cls");
-    
-    // ponizej przykladowy mechanizm zadawania pytania
-    bool isAskTheAudienceTaken = false; // zmienna sluzace do zaznaczenia czy dana pomoc zostala juz udzielona podczas gry
-    bool isFiftyFiftyTaken = false; // zmienna sluzace do zaznaczenia czy dana pomoc zostala juz udzielona podczas gry
-    bool isAnotherQuestionTaken = false; // zmienna sluzace do zaznaczenia czy dana pomoc zostala juz udzielona podczas gry
-    bool isPhoneToFriendTaken = false; // zmienna sluzaca do zaznaczania czy dana pomoc zostala juz udzielona podczas gry
-    bool isGameOver = false;
-    int points = 0;
-    while (!isGameOver) { // petla ktora zadaje pytania dopoki nie bedzie konca gry
+        // ponizej przykladowy mechanizm zadawania pytania
+        bool isAskTheAudienceTaken = false; // zmienna sluzace do zaznaczenia czy dana pomoc zostala juz udzielona podczas gry
+        bool isFiftyFiftyTaken = false; // zmienna sluzace do zaznaczenia czy dana pomoc zostala juz udzielona podczas gry
+        bool isAnotherQuestionTaken = false; // zmienna sluzace do zaznaczenia czy dana pomoc zostala juz udzielona podczas gry
+        bool isPhoneToFriendTaken = false; // zmienna sluzaca do zaznaczania czy dana pomoc zostala juz udzielona podczas gry
+        bool isGameOver = false;
+        int points = 0;
 
-        if (points < 2) {
-            askQuestion(questionsEasy, points, isGameOver, name, isAskTheAudienceTaken, isFiftyFiftyTaken, isAnotherQuestionTaken,isPhoneToFriendTaken); // zadawanie pytania z latwej puli
+        while (!isGameOver) { // petla ktora zadaje pytania dopoki nie bedzie konca gry
+
+            if (points < 2) {
+                askQuestion(questionsEasy, points, isGameOver, name, isAskTheAudienceTaken, isFiftyFiftyTaken, isAnotherQuestionTaken, isPhoneToFriendTaken); // zadawanie pytania z latwej puli
+            }
+            else if (points < 10) {
+                askQuestion(questionsMedium, points, isGameOver, name, isAskTheAudienceTaken, isFiftyFiftyTaken, isAnotherQuestionTaken, isPhoneToFriendTaken); // zadawanie pytania z sredniej puli
+            }
+            else {
+                askQuestion(questionsHard, points, isGameOver, name, isAskTheAudienceTaken, isFiftyFiftyTaken, isAnotherQuestionTaken, isPhoneToFriendTaken); // zadawanie pytania z ciezkiej puli
+            }
+
         }
-        else if (points < 10) {
-            askQuestion(questionsMedium, points, isGameOver, name, isAskTheAudienceTaken, isFiftyFiftyTaken, isAnotherQuestionTaken,isPhoneToFriendTaken); // zadawanie pytania z sredniej puli
+        string letter;
+        cout << "Jesli chcesz rozpoczac gre jeszcze raz wciscnij [T] jesli nie wcisnij [N] i zatwierdz enterem" << endl;
+        do
+        {
+            getline(cin, letter);
+            letter = letter.substr(0, 1);
+        } while (letter != "T" && letter != "t" && letter != "n" && letter != "N");
+        
+            
+        system("cls");
+        if (letter != "t" && letter != "T")
+        {
+            
+            for (int i = 0; questionsEasy.size()>i; i++)
+            {
+                questionsEasy[i].setAsked(false);
+            }
+            for (int i = 0; questionsMedium.size()>i; i++)
+            {
+                questionsMedium[i].setAsked(false);
+            }
+            for (int i = 0; questionsHard.size()>i; i++)
+            {
+                questionsHard[i].setAsked(false);
+            }
+            play = false;
         }
-        else {
-            askQuestion(questionsHard, points, isGameOver, name, isAskTheAudienceTaken, isFiftyFiftyTaken, isAnotherQuestionTaken,isPhoneToFriendTaken); // zadawanie pytania z ciezkiej puli
-        }
-       
+        
+        
     }
-    
-    
 }
+    
 
 bool validateChoice(string choice) {
     choice = choice.substr(0, 1);
@@ -318,6 +348,7 @@ void askQuestion(vector<Question> &questionsList, int &points, bool &isGameOver,
                 prize = "0zl";
             }
             cout << getRandomIncorrectMessage(name) << endl;
+            cout << "Prawidlowa odpowiedzia jest: " << questionsList.at(random).getCorrectAnswer() << endl;
             cout << "Wygrywasz: " << prize << endl;
             isGameOver = true; // wyjscie z gry poprzez niepoprawna odpowiedz
         }
@@ -361,6 +392,7 @@ void askQuestion(vector<Question> &questionsList, int &points, bool &isGameOver,
                 prize = "0zl";
             }
             cout << getRandomIncorrectMessage(name) << endl;
+            cout << "Prawidlowa odpowiedzia jest: " << questionsList.at(random).getCorrectAnswer() << endl;
             cout << "Wygrywasz: " << prize << endl;
             isGameOver = true; // wyjscie z gry poprzez niepoprawna odpowiedz
         }
@@ -406,6 +438,7 @@ void askQuestion(vector<Question> &questionsList, int &points, bool &isGameOver,
                 prize = "0zl";
             }
             cout << getRandomIncorrectMessage(name) << endl;
+            cout << "Prawidlowa odpowiedzia jest: " << questionsList.at(random).getCorrectAnswer() << endl;
             cout << "Wygrywasz: " << prize << endl;
             isGameOver = true; // wyjscie z gry poprzez niepoprawna odpowiedz
         }
@@ -448,6 +481,7 @@ void askQuestion(vector<Question> &questionsList, int &points, bool &isGameOver,
                 prize = "0zl";
             }
             cout << getRandomIncorrectMessage(name) << endl;
+            cout << "Prawidlową odpowiedzia jest: " << questionsList.at(random).getCorrectAnswer() << endl;
             cout << "Wygrywasz: " << prize << endl;
             isGameOver = true; // wyjscie z gry poprzez niepoprawna odpowiedz
         }
@@ -481,7 +515,9 @@ void askQuestion(vector<Question> &questionsList, int &points, bool &isGameOver,
         else {
             prize = "0zl";
         }
+        
         cout << getRandomIncorrectMessage(name) << endl;
+        cout << "Prawidlowa odpowiedzia jest: " << questionsList.at(random).getCorrectAnswer() << endl;
         cout << "Wygrywasz: " << prize << endl;
         isGameOver = true; // wyjscie z gry poprzez niepoprawna odpowiedz
     }

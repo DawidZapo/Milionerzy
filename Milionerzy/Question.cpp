@@ -191,25 +191,36 @@ void Question::displayPhoneToFriend()
 	Sleep(3000);
 	if (correctAnswer == 'A' || correctAnswer == 'a')
 	{
-		cout << "Mysle ze poprawna odpowiedzia jest A" << endl;
+		cout << "Mysle ze poprawna odpowiedzia jest C" << endl;
+		Sleep(1000);
+		cout << "Jednak po namysle wydaje mi sie ze to odpowiedz A" << endl;
 	}
 	else if (correctAnswer == 'B' || correctAnswer == 'b')
 	{
-		cout << "Mysle ze poprawna odpowiedzia jest B" << endl;
+		cout << "Mysle ze poprawna odpowiedzia jest D" << endl;
+		Sleep(1000);
+		cout << "Jednak po namysle wydaje mi sie ze to odpowiedz B" << endl;
 	}
 	else if (correctAnswer == 'C' || correctAnswer == 'c')
 	{
-		cout << "Mysle ze poprawna odpowiedzia jest C" << endl;
+		
+		cout << "Mysle ze poprawna odpowiedzia jest A" << endl;
+		Sleep(1000);
+		cout << "Jednak po namysle wydaje mi sie ze to odpowiedz C" << endl;
 	}
 	else if (correctAnswer == 'D' || correctAnswer == 'd')
 	{
-		cout << "Mysle ze poprawna odpowiedzia jest D" << endl;
+		
+		cout << "Mysle ze poprawna odpowiedzia jest C" << endl;
+		Sleep(1000);
+		cout << "Jednak po namysle wydaje mi sie ze to odpowiedz D" << endl;
 	}
 	else {
 		cout << "ERROR" << endl;
 	}
 
 }
+
 bool Question::isAlreadyAsked() {
 	return alreadyAsked;
 }

@@ -20,8 +20,9 @@ private:
 	string questionContent;
 	bool alreadyAsked;
 
+
 public:
-	Question(){}
+	Question() {}
 	Question(string questionContent, string answer1, string answer2, string answer3, string answer4, char correctAnswer);
 	~Question();
 	char getCorrectAnswer();
@@ -42,5 +43,7 @@ public:
 	void displayPhoneToFriend();
 	bool isAlreadyAsked();
 	void setAsked(bool flag);
+
+	
 };
 
