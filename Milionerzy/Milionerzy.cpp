@@ -444,7 +444,7 @@ void askQuestion(vector<Question> &questionsList, int &points, bool &isGameOver,
                 prize = "0zl";
             }
             cout << getRandomIncorrectMessage(name) << endl;
-            cout << "Prawidlowa odpowiedzia jest: " << questionsList.at(random).getCorrectAnswer() << endl;
+            cout << "Prawidlowa odpowiedzia jest: " << questionsList.at(anotherRandom).getCorrectAnswer() << endl;
             cout << "Wygrywasz: " << prize << endl;
             isGameOver = true; // wyjscie z gry poprzez niepoprawna odpowiedz
         }
