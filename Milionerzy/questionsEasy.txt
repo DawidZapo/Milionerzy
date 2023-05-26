@@ -40,3 +40,51 @@ Alkohol
 Czas
 Modlitwa
 C
+Dokoncz przyslowie: Gdzie kucharek szesc
+Tam nie ma co jesc
+Tam ida ciebie zjesc
+Tam mozna jesc
+Tam nie wolna jesc
+A
+Z iloma krajami graniczy Polska?
+9
+8
+7
+6
+C
+Prosta w geometrii:
+ma początek, ale nie ma końca
+ma koniec, ale nie ma początku
+nie ma początku oraz nie ma końca
+musi miec zaczepienie
+C
+Panczenisci do uprawiania swojego sportu potrzebuja:
+karabinku
+lyzew
+nart
+rakiety
+B
+W drobny mak cos rozbijamy, a takze:
+rozmieniamy bilon
+zalewamy sie
+siedzimy cicho
+nic nie mamy
+B
+Usankcjonowane zwyczajem jezykowym nudy to:
+flaszki z olejem
+pudy nudy
+flaki z olejem
+groch z kapusta
+C
+Ktora z wymienionych to tak zwana kawa z pradem?
+kawa po irlandzku
+kawa po szkocku
+kawa po szwedzku
+kawa po hiszpansku
+A
+Mawiamy, ze kazdy orze:
+jak morze szerokie i glebokie
+jak moze
+jak mu materii staje
+jak mu baterii staje
+B
