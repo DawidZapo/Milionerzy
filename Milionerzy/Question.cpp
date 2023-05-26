@@ -187,7 +187,7 @@ void Question::displayAskTheAudienceAnswers() {
 }
 void Question::displayPhoneToFriend()
 {
-	cout << "Dzwonienie to przyjaciela w toku... " << endl;
+	cout << "Dzwonienie do przyjaciela w toku... " << endl;
 	Sleep(3000);
 	if (correctAnswer == 'A' || correctAnswer == 'a')
 	{

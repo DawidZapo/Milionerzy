@@ -42,28 +42,31 @@ int main()
     } while (choice != "T" && choice != "t" && choice != "n" && choice != "N");
 
     if (choice == "t" || choice == "T") writeYourOwnYestions();
+
+    loadEasyQuestionBase(questionsEasy); //wczytywanie baz pytan
+    loadMediumQuestionBase(questionsMedium);
+    loadHardQuestionBase(questionsHard);
+
+    /*
+     cout << "EASY QUESTIONS" << endl;
+     for (int i = 0; i < questionsEasy.size(); i++) { // wypisanie wszystkich pytan oraz odpowiedzi dla questionsEasy przeczytanych w pliku .txt
+         questionsEasy.at(i).displayQuestion();      // zastosowanie tylko chwilowe by zobaczyc czy baza pytan sie wczytala
+         cout << questionsEasy.at(i).getCorrectAnswer() << endl << endl;
+     }
+     cout << "MEDIUM QUESTIONS" << endl;
+     for (int i = 0; i < questionsMedium.size(); i++) { // wypisanie wszystkich pytan oraz odpowiedzi dla questionsEasy przeczytanych w pliku .txt
+         questionsMedium.at(i).displayQuestion();      // zastosowanie tylko chwilowe by zobaczyc czy baza pytan sie wczytala
+         cout << questionsMedium.at(i).getCorrectAnswer() << endl << endl;
+     }
+     cout << "HARD QUESTIONS" << endl;
+     for (int i = 0; i < questionsHard.size(); i++) { // wypisanie wszystkich pytan oraz odpowiedzi dla questionsEasy przeczytanych w pliku .txt
+         questionsHard.at(i).displayQuestion();      // zastosowanie tylko chwilowe by zobaczyc czy baza pytan sie wczytala
+         cout << questionsHard.at(i).getCorrectAnswer() << endl << endl;
+     }
+     */
+    
     while (play)
     {
-        loadEasyQuestionBase(questionsEasy); //wczytywanie baz pytan
-        loadMediumQuestionBase(questionsMedium);
-        loadHardQuestionBase(questionsHard);
-        /*
-         cout << "EASY QUESTIONS" << endl;
-         for (int i = 0; i < questionsEasy.size(); i++) { // wypisanie wszystkich pytan oraz odpowiedzi dla questionsEasy przeczytanych w pliku .txt
-             questionsEasy.at(i).displayQuestion();      // zastosowanie tylko chwilowe by zobaczyc czy baza pytan sie wczytala
-             cout << questionsEasy.at(i).getCorrectAnswer() << endl << endl;
-         }
-         cout << "MEDIUM QUESTIONS" << endl;
-         for (int i = 0; i < questionsMedium.size(); i++) { // wypisanie wszystkich pytan oraz odpowiedzi dla questionsEasy przeczytanych w pliku .txt
-             questionsMedium.at(i).displayQuestion();      // zastosowanie tylko chwilowe by zobaczyc czy baza pytan sie wczytala
-             cout << questionsMedium.at(i).getCorrectAnswer() << endl << endl;
-         }
-         cout << "HARD QUESTIONS" << endl;
-         for (int i = 0; i < questionsHard.size(); i++) { // wypisanie wszystkich pytan oraz odpowiedzi dla questionsEasy przeczytanych w pliku .txt
-             questionsHard.at(i).displayQuestion();      // zastosowanie tylko chwilowe by zobaczyc czy baza pytan sie wczytala
-             cout << questionsHard.at(i).getCorrectAnswer() << endl << endl;
-         }
-         */
 
         system("cls");
         printRules(name);
@@ -103,7 +106,7 @@ int main()
         
             
         system("cls");
-        if (letter != "t" && letter != "T")
+        if (letter == "t" || letter == "T")
         {
             
             for (int i = 0; questionsEasy.size()>i; i++)
@@ -118,6 +121,9 @@ int main()
             {
                 questionsHard[i].setAsked(false);
             }
+            
+        }
+        else {
             play = false;
         }
         
