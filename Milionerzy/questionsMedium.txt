@@ -142,7 +142,7 @@ rubelit
 verdelit
 indigolit
 A
-Ile głownych por roku jest na sawannie?
+Ile glownych por roku jest na sawannie?
 jedna
 dwie
 trzy
@@ -172,7 +172,7 @@ plunge
 half-cup
 full-cup
 B
-Z czego Donatello wykonal slynnego "Dawida", pierwsza od czasow antyku wolnostojaca rzezbe przedstawiajaca nagiego mezczyzne?
+Z czego Donatello wykonal slynnego 'Dawida', pierwsza od czasow antyku wolnostojaca rzezbe przedstawiajaca nagiego mezczyzne?
 z czarnego marmuru
 z lipowego drewna
 z brazu
@@ -214,13 +214,13 @@ zycie w wiezieniu
 przebywanie w kosmosie
 odbijanie zakładnikow
 B
-"Jesli kto (...) nie ma w nienawisci ojca i matki, zony i dzieci, braci i siostr, nadto i siebie samego, nie moze byc moim uczniem." To slowa:
+'Jesli kto (...) nie ma w nienawisci ojca i matki, zony i dzieci, braci i siostr, nadto i siebie samego, nie moze byc moim uczniem.' To slowa:
 Jezusa Chrystusa
 Allaha
 Mojzesza
 Buddy
 A
-W oryginalnej trylogii "Gwiezdne wojny" C-3PO ma srebrna:
+W oryginalnej trylogii 'Gwiezdne wojny' C-3PO ma srebrna:
 szczeke
 klatke piersiowa
 lewa dlon
@@ -238,7 +238,7 @@ Data terrorystycznego ataku na WTC to:
 11 pazdziernika 2001 r.
 11 wrzesnia 2003 r.
 B
-Pumba z filmu "Krol Lew" byl:
+Pumba z filmu 'Krol Lew' byl:
 Guzcem
 Lwem
 Surykatka
@@ -279,4 +279,148 @@ Mieszko
 Jaroslaw
 Zbigniew
 Ignacy
+C
+Jakiego koloru sa gwiazdy na fladze Nowej Zelandii?
+Bialego
+Czerwonego
+Niebiesko-zoltego
+Zielonego
+B
+Ktora flaga zawiera posrodku Ashoka Chakhra, 24-ramienne kolo?
+Indie
+Sri Lanka
+Bangladesz
+Pakistan
+A
+Ktory stan w USA jest jedynym stanem z flaga przedstawiajaca Union Jack?
+New Hampshire
+Rhode Island
+Massachusetts
+Hawaje
+D
+Ktory z tych krajow ma najwiecej gwiazd na swojej fladze?
+Uzbekistan
+Papua-Nowa Gwinea
+Chiny
+Nowa Zelandia
+A
+Ktora kobieta zdobyla 24 muzyczne nagrody Grammy, najwiecej w historii?
+Beyonce
+Adele
+Aretha Franklin
+Alison Krauss
+A
+W ktorym filmie Disneya pojawil się hit Eltona Johna „Can You Feel the Love Tonight” z 1994 roku?
+Toy Story
+Aladyn
+Mulan
+Krol Lew
+D
+Ktory z tych 4 boysbandow sprzedal najwiecej plyt
+Jackson 5
+Backstreet Boys
+NSYNC
+Boyz II Mężczyźni
+B
+Ktory tenisista wygral Monte Carlo Masters przez 8 lat z rzedu?
+Roger Federer
+Fabio Fognini
+Bjorn Borg
+Rafael Nadal
+D
+W ktorym miescie odbyly się letnie Igrzyska Olimpijskie 2000?
+Sydnej
+Pekin
+Paryż
+Lodnyn
+A
+Jakie dwa zwierzeta tworza herb Australii?
+Wombat i Wallaby
+Waz i pajak
+Kangaroo i emu
+Dragon i dingo
+C
+Ktos z 'musofobia' cierpi na strach przed jakim zwierzeciem?
+Surykatki
+Slonie
+Myszy
+Strusie
+C
+Entomologia to nauka o:
+Owadach
+Przodkach
+Owocach
+Glazach
+A
+W filmie „Samochody”, kto jest glosem postaci Lightning McQueen?
+Toma Hanksa
+Owen Wilson
+Ben Stiller
+Matthew McConaughey
+B
+Gdzie jest polozony Most Westchnien?
+Paryz
+Wenecja
+Tokio
+San Francisco
+B
+Ile serc ma osmiornica?
+1
+2
+3
+4
+C
+W filmie The Great Gatsby, w ktorej wiosce na Long Island mieszka Jay Gatsby?
+Southampton
+East Village
+East Egg
+Studnia Północna
+C
+W jakim miescie mozesz znalezc „Dawida” Michala Aniola?
+Florencja
+Paryz
+Tuluza
+Madryt
+A
+Ktora konstelacja jest najblizej Ziemii?
+Herkules
+Centaurus
+Orion
+Wielka Niedzwiedzica
+B
+Kto byl pierwsza osoba, ktora odbyla podroz w kosmos w 1961 roku?
+Jurij Romanenko
+Jurij Głaskow
+Jurij Małyszew
+Jurij Gagarin
+D
+Jak nazywa sie granica wokol czarnej dziury, gdzie swiatlo nie moze uciec przed grawitacyjnym przyciaganiem dziury?
+Horyzont zdarzen
+Osobliwosc
+Dysk akrecyjny
+Pierscien fotonowy
+A
+Jak nazywa sie galaktyka najblizej Drogi Mlecznej?
+Whirlpool
+Kijanka
+Andromeda
+Messier 83
+C
+Jak nazywa sie „kosmiczny paczek” z lodu i skal, ktory lezy blisko orbity Neptuna?
+Chmura Oorta
+Sciana Quaoar
+Pas Kuipera
+Mglawica Torus
+C
+Na jakim instrumencie gra Phoebe, jedna z glownym bohatarek serialu 'Przyjaciele'?
+Gitara
+Fortepian
+Saksofon
+Skrzypce
+A
+W jakim miescie co roku odbywa sie Arabski Tydzien Mody?
+Doha
+Abu Zabi
+Dubai
+Medyna
 C

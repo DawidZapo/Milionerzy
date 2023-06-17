@@ -26,7 +26,7 @@ string getTheCurrentPrizeSum(int points);
 
 int main()
 {
-    bool play = true;
+    bool wantToPlay = true;
     vector<Question> questionsEasy; // przykladowa lista (taka ulepszona tablica) gdzie beda dodawane pytania, ta lista ma lepsze metody przez co latwiej dodac nowe pytania, taka ala dynamiczna tablica dla klasy/struktur
     vector<Question> questionsMedium; // tu pytania srednie
     vector<Question> questionsHard; // tu pytania ciezkie
@@ -65,7 +65,7 @@ int main()
      }
      */
     
-    while (play)
+    while (wantToPlay)
     {
 
         system("cls");
@@ -124,7 +124,7 @@ int main()
             
         }
         else {
-            play = false;
+            wantToPlay = false;
         }
         
         
@@ -1022,10 +1022,14 @@ void writeQuestionToFile(string choice) {
         getline(cin, answer);
         file << answer << endl;
 
-        cout << "Wprowadz poprawna odpowiedz [A] [B] [C] [D]: \n";
-        getline(cin, correctAnswer);
-        correctAnswer = correctAnswer.substr(0, 1);
-        correctAnswer = toupper(correctAnswer[0]);
+        do {
+            cout << "Wprowadz poprawna odpowiedz [A] [B] [C] [D]: \n";
+            getline(cin, correctAnswer);
+            correctAnswer = correctAnswer.substr(0, 1);
+            correctAnswer = toupper(correctAnswer[0]);
+        } while (correctAnswer != "A" && correctAnswer != "B" && correctAnswer != "C" && correctAnswer != "D");
+        // walidacja wpisanej litery przez uzytkownika. Mozna wprowadzic tylko A B C lub D
+        
 
         file << correctAnswer << endl;
 
